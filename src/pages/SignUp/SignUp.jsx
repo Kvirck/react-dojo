@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import './SignUp.css'
+import { useSignUp } from './../../hooks/useSignUp';
+import { useNavigate } from 'react-router-dom';
 export const SignUp = () => {
+  const { signUp, isPending, error } = useSignUp()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [thumbnail, setThumbnail] = useState(null)
   const [thumbnailError, setThumbnailError] = useState(null)
+  const navigate = useNavigate()
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(email, password, displayName);
+    await signUp(email, password, displayName, thumbnail)
+    navigate('/')
   }
 
   const handleFileChange = e => {
     setThumbnail(null)
     let selected = e.target.files[0]
-    console.log(selected);
     if (!selected) {
       setThumbnailError('Please select a file')
       return
@@ -31,6 +35,7 @@ export const SignUp = () => {
     setThumbnailError(null)
     setThumbnail(selected)
   }
+
   return (
     <form onSubmit={handleSubmit} className='auth-form'>
       <h2>sign up</h2>
@@ -51,7 +56,9 @@ export const SignUp = () => {
         <input onChange={handleFileChange} required type="file" />
         {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
-      <button className='btn'>Sign Up</button>
+      {!isPending && <button className='btn'>Sign Up</button>}
+      {isPending && <button className='btn' disabled>Loading...</button>}
+      {error && <button className='error'>{error}</button>}
     </form>
   )
 }

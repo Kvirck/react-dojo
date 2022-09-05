@@ -4,12 +4,12 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDBSojHMh6Hn6kfk4DyTf0_Vn-k5iDbLEc',
-  authDomain: 'dojo-project-management-dc719.firebaseapp.com',
-  projectId: 'dojo-project-management-dc719',
-  storageBucket: 'dojo-project-management-dc719.appspot.com',
-  messagingSenderId: '542915920406',
-  appId: '1:542915920406:web:22daa04e1b9bb204ca6b37',
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGEING_SENDER_ID,
+  appId: import.meta.env.VITE_ID,
 };
 
 const app = initializeApp(firebaseConfig);
